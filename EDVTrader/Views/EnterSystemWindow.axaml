@@ -1,0 +1,19 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+		WindowStartupLocation="CenterOwner"
+        Icon="/Assets/Icon.png"
+		CanResize="False"
+		x:Name="EnterSystemWnd"
+		Width="400"
+		Height="96"
+        x:Class="EDVTrader.Views.EnterSystemWindow"
+        Title="Viktor's Toolbox: EDET | System Selection">
+	<Grid RowDefinitions="20, 30, 40" Margin="4">
+		<TextBlock Grid.Row="0" Margin="0, 0, 0, 6" Text="Enter system name" HorizontalAlignment="Center"></TextBlock>
+		<TextBox Grid.Row="1" Watermark="System name here" Text="{Binding SystemName}"></TextBox>
+		<Button Grid.Row="2" Content="Change" Width="393" Command="{Binding ChangeSystem}" CommandParameter="{Binding ElementName=EnterSystemWnd}" HorizontalContentAlignment="Center"></Button>
+	</Grid>
+</Window>

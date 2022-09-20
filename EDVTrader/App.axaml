@@ -1,0 +1,15 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:EDVTrader"
+             xmlns:notification="clr-namespace:Avalonia.Notification;assembly=Notification.Avalonia"
+			 x:Class="EDVTrader.App">
+    <Application.DataTemplates>
+        <local:ViewLocator/>
+    </Application.DataTemplates>
+
+	<Application.Styles>
+		<FluentTheme Mode="Dark" />
+		<StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
+		<notification:NotificationStyle />
+	</Application.Styles>
+</Application>

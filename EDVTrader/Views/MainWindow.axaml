@@ -1,0 +1,156 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:EDVTrader.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:controls="clr-namespace:Avalonia.Notification.Controls;assembly=Notification.Avalonia"
+		xmlns:converters="clr-namespace:EDVTrader.Converters;assembly=EDVTrader"
+        mc:Ignorable="d"
+		x:Name="MainWnd"
+		CanResize="False"
+		Width="1220"
+		Height="480"
+        x:Class="EDVTrader.Views.MainWindow"
+        Icon="/Assets/Icon.png"
+        Title="Viktor's Toolbox: EDET">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<Window.Resources>
+		<converters:TimeConverter x:Key="TimeConverter"/>
+		<converters:StationTypeToIconConverter x:Key="StationTypeToIconConverter"/>
+		<converters:IntToDottedConverter x:Key="IntToDottedConverter"/>
+	</Window.Resources>
+
+	<Panel>
+		<Grid RowDefinitions="12, 68, 10, 220, 12, 132" ColumnDefinitions="12, 195, 12, 186, 12, 302, 12, 168, *, 12" ShowGridLines="False">
+
+			<Panel Grid.Row="1" Grid.Column="1">
+				<Border BorderBrush="Gray" BorderThickness="2" Padding="4">
+					<Grid RowDefinitions="20, 20, 20">
+						<TextBlock Grid.Row="0" FontWeight="Bold" Text="{Binding CommanderName, StringFormat=CMDR \{0\}}"></TextBlock>
+						<TextBlock Grid.Row="1" FontSize="13" Text="{Binding CurrentLocation}"></TextBlock>
+						<TextBlock Grid.Row="2" Foreground="Gray" Text="{Binding DisplayBalance, StringFormat=\{0\} CR}"></TextBlock>
+					</Grid>
+				</Border>
+			</Panel>
+
+			<Panel Grid.Row="3" Grid.Column="1">
+				<Border BorderBrush="Gray" BorderThickness="2" Padding="6">
+					<Grid RowDefinitions="40, 40, 30, 12, 28, 4, 30, 20" ColumnDefinitions="130, *">
+						<ComboBox Width="180" Grid.Row="0" PlaceholderText="Category" Items="{Binding Categories}" SelectedItem="{Binding SelectedCategory}">
+							<ComboBox.ItemTemplate>
+								<DataTemplate>
+									<TextBlock Text="{Binding Name}"></TextBlock>
+								</DataTemplate>
+							</ComboBox.ItemTemplate>
+						</ComboBox>
+
+						<ComboBox Width="180" Grid.Row="1" PlaceholderText="Commodity" Items="{Binding Commodities}" SelectedItem="{Binding SelectedCommodity}">
+							<ComboBox.ItemTemplate>
+								<DataTemplate>
+									<TextBlock Text="{Binding Name}"></TextBlock>
+								</DataTemplate>
+							</ComboBox.ItemTemplate>
+						</ComboBox>
+
+						<ComboBox Width="180" Grid.Row="2" PlaceholderText="Ship Size" Items="{Binding ShipSizes}" SelectedItem="{Binding SelectedShipSize}"></ComboBox>
+						<TextBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Watermark="Max Distance" Text="{Binding MaxDistance}"></TextBox>
+						<CheckBox Grid.Row="6" Content="Fleet Carriers" IsChecked="{Binding UseFleetCarriers}"></CheckBox>
+						<CheckBox Grid.Row="7" Content="Planetary" IsChecked="{Binding UsePlanetaryStations}"></CheckBox>
+
+						<Button Grid.Row="7" Margin="0, -26, 0, 0" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="50" Height="50" Command="{Binding RefreshStationsListCommand}">
+							<Image Source="/Assets/Refresh.png"></Image>
+						</Button>
+					</Grid>
+				</Border>
+			</Panel>
+
+			<Panel Grid.Row="5" Grid.Column="1">
+				<Border BorderBrush="Gray" BorderThickness="2" Padding="6">
+					<Grid RowDefinitions="2, 30, 14, 30, 6, 20, 20, 10" ColumnDefinitions="66, *" ShowGridLines="False">
+						<TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding QuestReward}" Watermark="Quest reward"></TextBox>
+						<TextBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding QuestRequirement}" Watermark="Amount"></TextBox>
+
+						<TextBlock Grid.Row="5" Grid.Column="0" Text="Profit: "></TextBlock>
+						<TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding DisplayQuestProfit, StringFormat=\ \{0\} CR}"></TextBlock>
+
+						<TextBlock Grid.Row="6" Grid.Column="0" Text="Required: "></TextBlock>
+						<TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding DisplayQuestBalanceRequirement, StringFormat=\ \{0\} CR}"></TextBlock>
+					</Grid>
+				</Border>
+			</Panel>
+
+			<Panel Grid.Row="1" Grid.Column="3">
+				<Border BorderBrush="Gray" BorderThickness="2" Padding="4">
+					<Grid RowDefinitions="20, 20, 20" ColumnDefinitions="70, 80, 12">
+						<TextBlock Grid.Row="0" Grid.Column="0" Text="Average: "></TextBlock>
+						<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding DisplayAveragePrice, StringFormat=\{0\} CR}"></TextBlock>
+
+						<TextBlock Grid.Row="1" Grid.Column="0" Text="Cheapest: "></TextBlock>
+						<TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding DisplayCheapestPrice, StringFormat=\{0\} CR}"></TextBlock>
+
+						<TextBlock Grid.Row="2" Grid.Column="0" Text="Dearest: "></TextBlock>
+						<TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding DisplayDearestPrice, StringFormat=\{0\} CR}"></TextBlock>
+					</Grid>
+				</Border>
+			</Panel>
+
+			<Panel Grid.Row="1" Grid.Column="5">
+				<Border BorderBrush="Gray" BorderThickness="2" Padding="2">
+					<Grid RowDefinitions="30, 30" ColumnDefinitions="100, 100, 100">
+						<Button Grid.Row="0" Grid.Column="0" Content="Silver" Command="{Binding LoadCommodityPreset}" CommandParameter="Silver" Width="94" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Button>
+						<Button Grid.Row="1" Grid.Column="0" Content="Gold" Command="{Binding LoadCommodityPreset}" CommandParameter="Gold" Width="94" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Button>
+
+						<Button Grid.Row="0" Grid.Column="1" Content="Bertrandite" Command="{Binding LoadCommodityPreset}" CommandParameter="Bertrandite" Width="94" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Button>
+						<Button Grid.Row="1" Grid.Column="1" Content="Indite" Command="{Binding LoadCommodityPreset}" CommandParameter="Indite" Width="94" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Button>
+
+						<Button Grid.Row="0" Grid.Column="2" Content="Tritium" Command="{Binding LoadCommodityPreset}" CommandParameter="Tritium" Width="94" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Button>
+						<Button Grid.Row="1" Grid.Column="2" Content="Cobalt" Command="{Binding LoadCommodityPreset}" CommandParameter="Cobalt" Width="94" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Button>
+					</Grid>
+				</Border>
+			</Panel>
+
+			<Panel Grid.Row="1" Grid.Column="7">
+				<Border BorderBrush="Gray" BorderThickness="2" Padding="2">
+					<Grid RowDefinitions="30, 30" ColumnDefinitions="100, 100, 100">
+						<Button Grid.Row="0" Grid.Column="0" Content="Change System" Command="{Binding ChangeSystem, Mode=OneWay}" CommandParameter="{Binding ElementName=MainWnd}" Width="160" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Button>
+						<Button Grid.Row="1" Grid.Column="0" Content="Use Current System" Command="{Binding UseCurrentSystem}" Width="160" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Button>
+					</Grid>
+				</Border>
+			</Panel>
+
+			<DataGrid Grid.Row="3" Grid.RowSpan="3" Grid.Column="3" Grid.ColumnSpan="7" Items="{Binding Stations}" SelectedItem="{Binding SelectedStation}" KeyDown="OnStationListKeyDown">
+				<DataGrid.Columns>
+					<DataGridTemplateColumn Header="I" IsReadOnly="True" Width="20">
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<Image Source="{Binding Type, Converter={StaticResource StationTypeToIconConverter}}" MaxHeight="20"/>
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>
+
+					<DataGridTextColumn Header="System" Width="2*" Binding="{Binding System}" IsReadOnly="True" />
+					<DataGridTextColumn Header="Station" Width="2*" Binding="{Binding Name}" IsReadOnly="True" />
+
+					<DataGridTextColumn Header="To System" Width="1*" Binding="{Binding DistanceToSystem, StringFormat=\{0:0.00\} l.y}" IsReadOnly="True" />
+					<DataGridTextColumn Header="To Station" Width="1*" Binding="{Binding DistanceToStation, Converter={StaticResource IntToDottedConverter}, StringFormat=\{0\} l.s}}" IsReadOnly="True" />
+
+					<DataGridTextColumn Header="Supply" Width="1*" Binding="{Binding Supply, Converter={StaticResource IntToDottedConverter}}" IsReadOnly="True" />
+					<DataGridTextColumn Header="Price" Width="1*" Binding="{Binding Price, Converter={StaticResource IntToDottedConverter}, StringFormat=\{0\} CR}" IsReadOnly="True" />
+
+					<DataGridTextColumn Header="Updated At" Binding="{Binding UpdatedAt, Converter={StaticResource TimeConverter}, Mode=OneWay}" IsReadOnly="True" />
+				</DataGrid.Columns>
+			</DataGrid>
+
+		</Grid>
+		
+		<Border Width="400" Margin="0, 400, 0, 0">
+			<controls:NotificationMessageContainer Manager="{Binding NotificationManager}" />
+		</Border>
+		
+	</Panel>
+	
+</Window>

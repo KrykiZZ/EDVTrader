@@ -1,0 +1,9 @@
+{
+  "category": 0,
+  "commodity": 0,
+  "ship_size": 0,
+  "max_distance": 0,
+  "use_fleet_carriers": false,
+  "use_planetary_stations": false,
+  "selected_system": "Mainani"
+}

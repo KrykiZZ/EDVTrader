@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32526.322
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EDVTrader", "EDVTrader\EDVTrader.csproj", "{2D781A07-45BD-4DD0-AB5E-E486338AEC06}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2D781A07-45BD-4DD0-AB5E-E486338AEC06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D781A07-45BD-4DD0-AB5E-E486338AEC06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D781A07-45BD-4DD0-AB5E-E486338AEC06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D781A07-45BD-4DD0-AB5E-E486338AEC06}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {70F0CC60-05AB-4191-BAD7-27CD3CD1D9D7}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "EDVTrader": {
+      "commandName": "Project",
+      "nativeDebugging": false
+    }
+  }
+}
