@@ -35,7 +35,7 @@ namespace EDVTrader.API
             string url =
                 $"https://inara.cz/elite/commodities/" +
                 $"?pi1=1" +
-                $"&pi2={commodityId}" +
+                $"&pa1[]={commodityId}" + 
                 $"&ps1={nearSystem}" +
                 $"&pi10=1" +
                 $"&pi11={maxDistance}" +
@@ -61,7 +61,7 @@ namespace EDVTrader.API
                 return new() { Status = InaraResultStatus.Success, Result = new() };
 
             List<StationInfo> stations = new();
-            foreach (HtmlNode row in doc.DocumentNode.SelectNodes("//table[@class='tablesortercollapsed']//tr").Skip(1))
+            foreach (HtmlNode row in doc.DocumentNode.SelectNodes("/html/body/div[3]/div[2]/div[3]/table/tbody/tr").Skip(1))
             {
                 try
                 {
@@ -141,13 +141,11 @@ namespace EDVTrader.API
                 var doc = new HtmlDocument();
                 doc.LoadHtml(html);
 
-                var dropdown = doc.DocumentNode.SelectSingleNode("//*[@name=\"pi2\"]");
+                var dropdown = doc.DocumentNode.SelectSingleNode("//*[@id=\"tokenizeitems\"]");
                 return new()
                 {
                     Status = InaraResultStatus.Success,
-                    Result = dropdown.SelectNodes("option")
-                    .Select(x => KeyValuePair.Create(int.Parse(x.Attributes["value"].Value), x.InnerText))
-                    .ToDictionary(x => x.Key, x => x.Value)
+                    Result = dropdown.SelectNodes("option").Select(x => KeyValuePair.Create(int.Parse(x.Attributes["value"].Value), x.InnerText)).ToDictionary(x => x.Key, x => x.Value)
                 };
             }
             catch(Exception ex)
